@@ -1,0 +1,17 @@
+# virtualenv uses its own version of site.py that doesn't include the out-of-the-box
+# interpreter history from 3.4, so it has to be reimplemented here
+
+import readline 
+import rlcompleter 
+import atexit 
+import os 
+# tab completion 
+readline.parse_and_bind('tab: complete') 
+# history file 
+histfile = os.path.join(os.environ['HOME'], '.python-virtualenv-history') 
+try: 
+    readline.read_history_file(histfile) 
+except IOError: 
+    pass 
+atexit.register(readline.write_history_file, histfile) 
+del os, histfile, readline, rlcompleter
